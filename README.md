@@ -1,20 +1,20 @@
-# Vulkan 彩色三角锥
+# Vulkan Colored Pyramid
 
-这是一个 C++20 Vulkan 示例程序：渲染持续旋转的四面体。四个顶点使用不同颜色，GPU 会在每个三角面上平滑插值。
+This is a C++20 Vulkan sample program that renders a continuously rotating tetrahedron. The four vertices use different colors, and the GPU smoothly interpolates them across each triangular face.
 
-## 环境要求
+## Requirements
 
-- CMake 3.21 或更高版本
+- CMake 3.21 or newer
 - Conan 2
-- 支持 C++20 的编译器
-- Vulkan SDK（包含 Vulkan loader、头文件和 `glslc`）
-- 支持 Vulkan 的显卡驱动
+- A C++20-capable compiler
+- Vulkan SDK (includes the Vulkan loader, headers, and `glslc`)
+- A Vulkan-capable graphics driver
 
-Windows 用户请先安装 Vulkan SDK，并确保 `VULKAN_SDK` 指向 SDK 安装目录。GLFW 和 GLM 由 Conan 管理，Vulkan 本身由 SDK 提供。
+On Windows, install the Vulkan SDK first and make sure `VULKAN_SDK` points to the SDK installation directory. GLFW and GLM are managed by Conan, while Vulkan itself is provided by the SDK.
 
-## Windows 构建
+## Windows build
 
-在项目目录的 Visual Studio Developer PowerShell，或已配置 C++ 编译器的终端中运行：
+Run the following in Visual Studio Developer PowerShell in the project directory, or in any terminal with the C++ toolchain configured:
 
 ```powershell
 conan profile detect --force
@@ -24,11 +24,11 @@ cmake --build build/app --config Release
 .\build\app\Release\VulkanPyramid.exe
 ```
 
-如果使用单配置生成器，可执行文件通常位于 `build/app/VulkanPyramid.exe`。
+If you are using a single-config generator, the executable is typically located at `build/app/VulkanPyramid.exe`.
 
-## Linux 构建
+## Linux build
 
-安装 Vulkan SDK 和支持 Vulkan 的显卡驱动，然后运行：
+Install the Vulkan SDK and a Vulkan-capable graphics driver, then run:
 
 ```sh
 conan profile detect --force
@@ -38,4 +38,4 @@ cmake --build build/app --config Release
 ./build/app/VulkanPyramid
 ```
 
-示例窗口固定尺寸；关闭窗口即可退出渲染循环。
+The example window has a fixed size; closing the window exits the render loop.
