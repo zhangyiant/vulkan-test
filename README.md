@@ -39,3 +39,11 @@ cmake --build build/app --config Release
 ```
 
 The example window has a fixed size; closing the window exits the render loop.
+
+## macOS runtime
+
+The app passes its linked Vulkan loader to GLFW and enables MoltenVK portability enumeration, so no `DYLD_LIBRARY_PATH` setting is needed:
+
+```sh
+./build/build/Release/VulkanPyramid
+```

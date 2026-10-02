@@ -116,6 +116,7 @@ private:
     size_t currentFrame = 0;
 
     void initialize() {
+        glfwInitVulkanLoader(vkGetInstanceProcAddr);
         if (glfwInit() != GLFW_TRUE) {
             throw std::runtime_error("Failed to initialize GLFW");
         }
@@ -201,10 +202,18 @@ private:
             throw std::runtime_error("GLFW could not provide Vulkan instance extensions");
         }
 
+        std::vector<const char*> enabledExtensions(extensions, extensions + extensionCount);
+        VkInstanceCreateFlags instanceFlags = 0;
+#ifdef __APPLE__
+        enabledExtensions.push_back(VK_KHR_PORTABILITY_ENUMERATION_EXTENSION_NAME);
+        instanceFlags |= VK_INSTANCE_CREATE_ENUMERATE_PORTABILITY_BIT_KHR;
+#endif
+
         VkInstanceCreateInfo createInfo{VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO};
+        createInfo.flags = instanceFlags;
         createInfo.pApplicationInfo = &appInfo;
-        createInfo.enabledExtensionCount = extensionCount;
-        createInfo.ppEnabledExtensionNames = extensions;
+        createInfo.enabledExtensionCount = static_cast<uint32_t>(enabledExtensions.size());
+        createInfo.ppEnabledExtensionNames = enabledExtensions.data();
 
         if (vkCreateInstance(&createInfo, nullptr, &instance) != VK_SUCCESS) {
             throw std::runtime_error("Failed to create Vulkan instance");
